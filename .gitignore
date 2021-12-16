@@ -1,0 +1,24 @@
+server/.env
+server/node_modules
+server/service-account.json
+
+covidpass/node_modules
+covidpass/.pnp
+covidpass/.pnp.js
+
+# testing
+covidpass/coverage
+
+# production
+covidpass/build
+
+# misc
+covidpass/.DS_Store
+covidpass/.env.local
+covidpass/.env.development.local
+covidpass/.env.test.local
+covidpass/.env.production.local
+
+covidpass/npm-debug.log*
+covidpass/yarn-debug.log*
+covidpass/yarn-error.log*

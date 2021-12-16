@@ -1,0 +1,492 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Readex+Pro:wght@600;700&family=Roboto+Mono&display=swap');
+
+$green: #64B450;
+$header-grey: #1E2831;
+$text-grey: #54606C;
+$main-font: 'Inter', sans-serif;
+$blue-background: #F8F9FD;
+
+body {
+  p, h1, h2, h3, h4, span {
+    font-family: $main-font;
+  }
+  
+  p, span {
+    color: $text-grey;
+    font-weight: 400;
+  }
+
+  h1, h2, h3, h4 {
+    color: $header-grey;
+  }
+}
+
+
+
+.QRscanner {
+  .LFT-ID {
+    display: inline-block;
+    background-color: #64B450;
+    color: white;
+    padding: 8px 20px;
+    border-radius: 5px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+    font-family: 'Roboto Mono', monospace;
+  }
+}
+
+.main {
+
+  .container-main {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    color: $header-grey;
+    padding:0;
+  }
+
+  .content {
+    background-color: $blue-background;
+  }
+
+  .landing{
+    width: 1360px;
+    max-width: 100%;
+    margin: auto;
+    padding-bottom: 50px;
+  }
+
+  .intro {
+    padding: 20px 10px;
+  }
+
+  .intro.content-intro {
+    width:600px;
+    max-width: 100%;
+  }
+
+  .tagline {
+    margin: 0;
+    font-family: $main-font;
+    font-weight: 800;
+    letter-spacing: 1px;
+  }
+
+  .tagline1 {
+    margin-top: 50px;
+  }
+
+  .tagline2 {
+    color: $green;
+    background: -webkit-linear-gradient(#64B450, #82e469);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .spiel {
+    font-weight: 400;
+    color: $text-grey;
+    margin-top: 40px;
+
+    .keyword {
+      color: $green;
+      background: -webkit-linear-gradient(#55a740, #6ac753);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 800;
+    }
+  }
+
+  .free-trial {
+    display: inline-block;
+    background: rgb(100,180,80);
+    background: linear-gradient(140deg, rgba(100,180,80,1) 0%, rgba(130,228,105,1) 100%);
+    border-radius: 50px;
+    padding: 20px 30px;
+    margin-top: 30px;
+    text-decoration: none;
+    color: white;
+    font-family: $main-font;
+    font-weight: 600;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+  }
+
+  .images-landing {
+    padding-top: 50px;
+    text-align: center;
+    img {
+      width: 600px;
+      max-width: 100%;
+    }
+  }
+
+  .review-container {
+    height: 100%;
+    padding: 20px 0px;
+  }
+
+  .review {
+    background-color: white;
+    padding: 25px 35px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+    border-radius: 20px;
+    height: 100%;
+
+    h3 {
+      font-size: 24px;;
+      font-weight: 600;
+      position: relative;
+
+      &:after {
+        content: '"';
+        position: absolute;
+        top: 40px;
+        left: 0px;
+        color: #ccc;
+      }
+    }
+
+    p {
+      padding: 5px 10px;
+      margin: 0;
+    }
+
+    p.job {
+      padding: 10px 0px;
+      font-weight: 600;
+      font-size: 16px;
+    }
+  }
+
+  .home-title {
+    text-align: center;
+
+    h2 {
+      margin-bottom: 30px;
+      font-weight: 800;
+    }
+  }
+}
+
+.QRscanner-container {
+  background-color: $blue-background;
+
+  .QRscanner {
+    margin:auto;
+    text-align: center;
+    width: 400px;
+    max-width: 100%;
+    padding: 20px;
+
+    .scanner {
+      margin: auto;
+      width:100%;
+      box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+    }
+  }
+}
+
+.LFT-submission {
+  text-align: center;
+
+  input{
+    font-family: 'Roboto Mono', monospace;
+    padding: 5px 10px;
+    margin-top: 10px;
+    display: block;
+    width: 100%;
+  }
+
+  button {
+    background: $green;
+    // background: linear-gradient(140deg, rgba(100,180,80,1) 0%, rgba(130,228,105,1) 100%);
+    color: white;
+    border: none;
+    padding: 10px 10px;
+    text-align: center;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+    display: block;
+    width:100%;
+    text-decoration: none;
+    font-family: $main-font;
+    font-weight: 600;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+    margin-top: 10px;
+  
+  }
+
+  .errors {
+    padding: 5px;
+    margin:0;
+    color: red;
+    font-style: italic;
+    text-align: left;
+  }
+}
+
+.subscriptions {
+  margin: auto;
+  width: 700px;
+  max-width: 100%;
+
+  h2 {
+    text-align: center;
+    font-weight: 800;
+    margin: 20px 20px 40px 20px;
+  }
+
+  .plan-choice {
+    padding: 20px;
+    background-color: white;
+    outline: none;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    width: 100%;
+
+    &:focus {
+      outline: 2px solid $green;
+      border: 1px solid $green;
+    }
+
+    .plan-img {
+      display: block;
+      margin: auto;
+      width: 100%;
+      max-width: 100%;
+      padding: 30px;
+    }
+
+    span {
+      display: block;
+    }
+
+    .plan-name {
+      font-size: 22px;
+      font-weight: 800;
+      color: $header-grey;
+      margin-bottom: 8px;
+    }
+
+    .fee, .each {
+      display: inline-block;
+      margin-bottom: 20px;
+    }
+
+    .fee {
+      font-size: 32px;
+      font-weight: 800;
+      color: $header-grey;
+    }
+
+    ul {
+      margin: 0;
+      padding:20px;
+      list-style: none;
+    }
+
+    ul li {
+      margin: 0;
+      font-family: $main-font;
+      color: $text-grey;
+      text-align: left;
+      padding: 10px 20px;
+      background: url('./images/tick2.png') no-repeat left top;
+      padding-left: 44px;
+      padding-top: 1px;
+    }
+
+    .choose-me {
+      display: block;
+      background: rgb(100,180,80);
+      background: linear-gradient(140deg, rgba(100,180,80,1) 0%, rgba(130,228,105,1) 100%);
+      border-radius: 50px;
+      padding: 10px 15px;
+      margin: 40px;
+      margin-top: 10px;
+      text-decoration: none;
+      color: white;
+      font-family: $main-font;
+      font-weight: 600;
+      box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+    }
+
+  }
+
+  .plan-chosen {
+    outline: 2px solid $green;
+      border: 1px solid $green;
+  }
+
+  .payment-details {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding:10px;
+    padding-top: 13px;
+    font-family: $main-font;
+    color: red;
+    background-color: white;
+  }
+
+  .btn-pay {
+    display: inline-block;
+    background: rgb(100,180,80);
+    background: linear-gradient(140deg, rgba(100,180,80,1) 0%, rgba(130,228,105,1) 100%);
+    padding: 10px 15px;
+    margin: 40px 0px;
+    margin-top: 10px;
+    text-decoration: none;
+    color: white;
+    font-family: $main-font;
+    font-weight: 600;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+    
+    &:hover {
+      color: white;
+    }
+  }
+
+  .lds-ring {
+    display: inline-block;
+    position: relative;
+    width: 40px;
+    height: 40px;
+  }
+  .lds-ring div {
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    width: 34px;
+    height: 34px;
+    margin: 4px 8px 4px 20px;
+    border: 5px solid white;
+    border-radius: 50%;
+    animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    border-color: $green transparent transparent transparent;
+  }
+  .lds-ring div:nth-child(1) {
+    animation-delay: -0.45s;
+  }
+  .lds-ring div:nth-child(2) {
+    animation-delay: -0.3s;
+  }
+  .lds-ring div:nth-child(3) {
+    animation-delay: -0.15s;
+  }
+  @keyframes lds-ring {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+}
+
+.subscription-plan {
+  background-color: white;
+  border-radius: 15px;
+  border: 1px solid #ccc;
+  padding: 20px;
+
+  h3 {
+    margin: 0;
+    font-weight:600;
+    text-transform: capitalize;
+  }
+}
+
+.header {
+  width: 100%;
+
+  .signin {
+    background: none;
+    color: $text-grey;
+    border: none;
+    padding: 4px 16px;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+    text-align: left;
+    display: block;
+  }
+
+  .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 1360px;
+    max-width: 100%;
+    margin:auto;
+    font-family: 'Inter';
+    padding: 25px;
+  
+    img {
+      width: 200px;
+    }
+
+    .links {
+      display: flex;
+
+      a, .dropdown {
+        text-decoration: none;
+        color: $text-grey;
+        padding: 16px 16px;
+      }
+    }
+
+    .dropbtn {
+      padding: 16px;
+      font-size: 16px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      left: 10px;
+      margin-top: 5px;
+      background-color: #f9f9f9;
+      min-width: 160px;
+      box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+      border-radius: 5px;
+      z-index: 1;
+      padding: 5px 0px;
+
+      .btn-dropdown {
+        background: none;
+        color: inherit;
+        border: none;
+        padding: 4px 16px;
+        font: inherit;
+        cursor: pointer;
+        outline: inherit;
+        text-align: left;
+        display: block;
+      }
+    }
+    
+    .dropdown-content button {
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      width: 100%;
+    }
+
+    .dropdown-content a:hover,
+    .dropdown-content button:hover {
+      background-color: #f1f1f1;
+    }
+    .dropdown:hover .dropdown-content {display: block;}
+  }
+}
