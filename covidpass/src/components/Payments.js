@@ -13,7 +13,7 @@ function Payments() {
         const validAmount = Math.min(Math.max(amount, 50), 9999999);
         setAmount(validAmount);
 
-        const pi = await fetchFromAPI('payments', {body: {amount: validAmount}});
+        const pi = await fetchFromAPI('billing/payments', {body: {amount: validAmount}});
         setPaymentIntent(pi);
     }
 

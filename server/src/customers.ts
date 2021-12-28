@@ -1,5 +1,5 @@
 import { stripe } from './';
-import { db, auth } from './firebase';
+import { db } from './firebase';
 import Stripe from 'stripe';
 
 export async function getOrCreateCustomer(userId: string, params?: Stripe.CustomerCreateParams) {

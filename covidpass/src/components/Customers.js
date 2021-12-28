@@ -1,27 +1,17 @@
 import React, { useState, useEffect, Suspense } from 'react';
+import { Link } from 'react-router-dom';
 import { fetchFromAPI } from './helpers';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import { useAuthState } from "react-firebase-hooks/auth";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { Container, Row, Col }  from 'react-bootstrap';
-import { doc, setDoc } from "firebase/firestore"; 
-import { auth, db } from './firebase';
+import { auth } from './firebase';
 import Header from './Header';
 
-const provider = new GoogleAuthProvider();
+
 
 export function SignIn() {
-    const signIn = async () => {
-        const credential = await signInWithPopup(auth, provider);
-        const { uid, email } = credential.user;
-        // db.collection('users').doc(uid).set({ email }, { merge: true });
-        setDoc(doc(db, "users", uid), {email}, {merge: true})
-    }
-
     return (
-        <button  className="button signin btn-dropdown" onClick={signIn}>
-            Sign In
-        </button>
+        <Link className="button signin btn-dropdown" to={"/login"}>Sign In</Link>
+        // <button  className="button signin btn-dropdown" onClick={signIn}>Sign In</button>
     )
 }
 
@@ -50,7 +40,7 @@ function SaveCard(props) {
   
     // Create the setup intent
     const createSetupIntent = async (event) => {
-      const si = await fetchFromAPI('wallet');
+      const si = await fetchFromAPI('billing/wallet');
       setSetupIntent(si);
     };
   
@@ -59,6 +49,7 @@ function SaveCard(props) {
       event.preventDefault();
   
       const cardElement = elements.getElement(CardElement);
+      console.log("you are herr")
   
       // Confirm Card Setup
       const {
@@ -80,7 +71,7 @@ function SaveCard(props) {
   
     const getWallet = async () => {
       if (user) {
-        const paymentMethods = await fetchFromAPI('wallet', { method: 'GET' });
+        const paymentMethods = await fetchFromAPI('billing/wallet', { method: 'GET' });
         setWallet(paymentMethods);
       }
     };

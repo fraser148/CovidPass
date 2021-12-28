@@ -45,7 +45,8 @@ export async function createSubscription(
         console.log("we are here")
         auth.setCustomUserClaims(userId, {
             userRole: "company",
-            userPlan: product.metadata.firebaseRole
+            userPlan: product.metadata.firebaseRole,
+            company: "Failte Foods"
         });
       }
 
@@ -69,7 +70,7 @@ export async function cancelSubscription(
             .update({
                 activePlans: firestore.FieldValue.arrayRemove(subscription.id)
             });
-        auth.setCustomUserClaims(userId, {userRole: null, userPlan: null})
+        auth.setCustomUserClaims(userId, {userRole: null, userPlan: null, company: null})
     }
     return subscription;
 }

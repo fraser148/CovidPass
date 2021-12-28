@@ -30,3 +30,10 @@ export const isUserPremium = async () => {
   console.log("decodedToken", decodedToken.claims.userPlan); // output is undefined, stripeRole doesn't exist :( more on that below
   return decodedToken.claims.userPlan;
 }
+
+export const isEmployee = async () => {
+  await auth.currentUser.getIdToken(true);
+  const decodedToken = await auth.currentUser.getIdTokenResult();
+  console.log("decodedToken", decodedToken.claims.userRole); // output is undefined, stripeRole doesn't exist :( more on that below
+  return decodedToken.claims.userRole;
+}

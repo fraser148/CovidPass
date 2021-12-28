@@ -42,8 +42,8 @@ const Header = () => {
                     {user && !userLoading && (
                         <div className="dropdown">
                             <span className="dropbtn">{user.displayName}</span>
-                            <div class="dropdown-content">
-                                <Link to="/profile" className="button signout btn-dropdown">Profile</Link>
+                            <div className="dropdown-content">
+                                <Link to="/dashboard" className="button signout btn-dropdown">Dashboard</Link>
                                 <Link to="/qr" className="button signout btn-dropdown">QR Scanner</Link>
                                 <SignOut user={user} />
                             </div>

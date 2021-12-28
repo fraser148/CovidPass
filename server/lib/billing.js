@@ -32,7 +32,8 @@ async function createSubscription(userId, plan, payment_method) {
         console.log("we are here");
         firebase_1.auth.setCustomUserClaims(userId, {
             userRole: "company",
-            userPlan: product.metadata.firebaseRole
+            userPlan: product.metadata.firebaseRole,
+            company: "Failte Foods"
         });
     }
     return subscription;
@@ -51,7 +52,7 @@ async function cancelSubscription(userId, subscriptionId) {
             .update({
             activePlans: firebase_admin_1.firestore.FieldValue.arrayRemove(subscription.id)
         });
-        firebase_1.auth.setCustomUserClaims(userId, { userRole: null, userPlan: null });
+        firebase_1.auth.setCustomUserClaims(userId, { userRole: null, userPlan: null, company: null });
     }
     return subscription;
 }

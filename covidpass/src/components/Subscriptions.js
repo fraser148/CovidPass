@@ -86,7 +86,7 @@ function SubscribeToPlan(props) {
     // Fetch current subscriptions from the API
     const getSubscriptions = async () => {
         if (user) {
-            const subs = await fetchFromAPI('subscriptions', { method: 'GET' });
+            const subs = await fetchFromAPI('billing/subscriptions', { method: 'GET' });
             setSubscriptions(subs);
         }
     };
@@ -94,7 +94,7 @@ function SubscribeToPlan(props) {
     // Cancel a subscription
     const cancel = async (id) => {
         setLoading(true);
-        await fetchFromAPI('subscriptions/' + id, { method: 'PATCH' });
+        await fetchFromAPI('billing/subscriptions/' + id, { method: 'PATCH' });
         alert('canceled!');
         await getSubscriptions();
         setLoading(false);
@@ -122,7 +122,7 @@ function SubscribeToPlan(props) {
 
         // Create Subscription on the Server
         console.log(plan)
-        const subscription = await fetchFromAPI('subscriptions', {
+        const subscription = await fetchFromAPI('billing/subscriptions', {
             body: {
                 plan,
                 payment_method: paymentMethod.id,
@@ -251,7 +251,7 @@ function SubscribeToPlan(props) {
                                                 </button>
                                                 
                                                 {loading && (
-                                                    <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+                                                    <div className="lds-ring"><div></div><div></div><div></div><div></div></div>
                                                 )}
                                             </form>
                                         </Col>

@@ -1,16 +1,26 @@
 import express, { NextFunction, Request, Response } from 'express';
+import bodyParser   from "body-parser";
 import cors from 'cors';
-import { createStripeCheckoutSession } from './checkout';
-import { createPaymentIntent } from './payments';
 import { handleStripeWebhook } from './webhooks';
 import { auth } from './firebase';
-import { createSetupIntent, listPaymentMethods } from './customers';
-import { cancelSubscription, createSubscription, listSubscriptions } from './billing';
+import UserRoutes from './routes/user.routes';
+import BillingRoutes from './routes/billing.routes';
+import db from './models/index';
 
 export const app = express()
 
 app.use(cors({ origin: true }))
-app.use(decodeJWT)
+
+const maybe = (fn) => {
+    return function(req: Request, res: Response, next: NextFunction) {
+        if (req.path === "/company/reference/SAURA") {
+            next();
+        } else {
+            fn(req, res, next)
+        }
+    }
+}
+app.use(maybe(decodeJWT));
 
 app.use(
     express.json({
@@ -18,18 +28,59 @@ app.use(
     })
 )
 
-app.post('/test', (req: Request, res: Response) => {
+app.use(bodyParser.json());
 
-    const amount = req.body.amount;
+app.use(bodyParser.urlencoded({ extended: true }));
 
-    res.status(200).send({ with_tax: amount * 7})
-})
+const Employee = db.employee;
+const Test = db.test;
+const Company = db.company;
 
-app.post(
-    '/checkouts/', runAsync(async ({ body }: Request, res: Response) => {
-        res.send(await createStripeCheckoutSession(body.line_items));
+// db.sequelize.sync({force: true}).then(() => {
+//   console.log('Drop and Resync Db');
+//   initial()
+// });
+db.sequelize.sync()
+
+const initial = async () => {
+    await Company.create({
+        id: "Aup7O2IoAFfzAoP7yH7ZCEGUsDA2",
+        company: "Saura Digital Media",
+        address1: "69 Corrour Road",
+        address2: "Glasgow",
+        country: "United Kingdom",
+        postcode: "G43 2ED",
+        email: "fraser@sauramedia.com",
+        stripeCustomerId: "cus_KmjoDKQ1CaOCxk",
+        ref: "SAURA"
     })
-);
+
+    await Employee.bulkCreate([{
+        id: "Pw8JnPdaVcSOwQIiDszvNQEh86b2",
+        fname: "Fraser",
+        lname: "Rennie",
+        email: "fjrennie1@outlook.com",
+        companyId: "Aup7O2IoAFfzAoP7yH7ZCEGUsDA2"
+    },{
+        id: "oTEmivOknGWfBN4zmSEmlFPtFwO2",
+        fname: "Emily",
+        lname: "Luo",
+        email: "fraser.rennie@exeter.ox.ac.uk",
+        companyId: "Aup7O2IoAFfzAoP7yH7ZCEGUsDA2"
+    },{
+        id: "FAAILTE",
+        fname: "Grant",
+        lname: "Rennie",
+        email: "grant@failtefoods.com",
+        companyId: "Aup7O2IoAFfzAoP7yH7ZCEGUsDA2"
+    }]);
+
+    await Test.create({
+        testId: "LHG87693484",
+        result: "positive",
+        user: "Pw8JnPdaVcSOwQIiDszvNQEh86b2",
+    })
+}
 
 // Catch errors
 function runAsync(callback: Function) {
@@ -38,63 +89,8 @@ function runAsync(callback: Function) {
     }
 }
 
-app.post(
-    '/payments',
-    runAsync(async ({body}: Request, res: Response) => {
-        res.send(
-            await createPaymentIntent(body.amount)
-        )
-    })
-)
-
-app.post(
-    '/wallet',
-    runAsync(async (req: Request, res: Response) => {
-        const user = validateUser(req);
-        const setupIntent = await createSetupIntent(user.uid);
-        res.send(setupIntent);
-    })
-)
-
-app.get(
-    '/wallet',
-    runAsync(async (req: Request, res: Response) => {
-        const user = validateUser(req);
-
-        const wallet = await listPaymentMethods(user.uid);
-        res.send(wallet.data);
-    })
-);
-
-app.post(
-    '/subscriptions/',
-    runAsync(async (req: Request, res: Response) => {
-        const user = validateUser(req);
-        const { plan, payment_method } = req.body;
-        const subscription = await createSubscription(user.uid, plan, payment_method);
-        res.send(subscription);
-    })
-);
-
-app.get(
-    '/subscriptions/',
-    runAsync(async (req: Request, res: Response) => {
-        const user = validateUser(req);
-
-        const subscriptions = await listSubscriptions(user.uid);
-
-        res.send(subscriptions.data);
-    })
-);
-
-app.patch(
-    '/subscriptions/:id',
-    runAsync(async (req: Request, res: Response) => {
-        const user = validateUser(req);
-        res.send(await cancelSubscription(user.uid, req.params.id));
-    })
-);
-
+UserRoutes(app);
+BillingRoutes(app);
 
 //  WEBHOOKS
 app.post('/hooks', runAsync(handleStripeWebhook));
@@ -112,15 +108,4 @@ async function decodeJWT(req: Request, res: Response, next: NextFunction) {
         }
     }
     next();
-}
-
-function validateUser(req: Request) {
-    const user = req['currentUser'];
-    if (!user) {
-        throw new Error(
-            'You must be logged in to make this request.'
-        )
-    }
-
-    return user;
 }
