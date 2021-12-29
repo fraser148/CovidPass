@@ -16,6 +16,7 @@ const UserRoutes = (app) => {
     app.get("/company/employees", user_controller_1.default.getEmployees);
     app.get("/company/groups", user_controller_1.default.getGroups);
     app.get("/company/group/:group", user_controller_1.default.getGroup);
+    app.post("/company/send", user_controller_1.default.sendMail);
 };
 exports.default = UserRoutes;
 //# sourceMappingURL=user.routes.js.map

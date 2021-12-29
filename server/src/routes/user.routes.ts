@@ -17,6 +17,8 @@ const UserRoutes = (app) => {
   app.get("/company/employees", controller.getEmployees)
   app.get("/company/groups", controller.getGroups)
   app.get("/company/group/:group", controller.getGroup)
+
+  app.post("/company/send", controller.sendMail)
 };
 
 export default UserRoutes;

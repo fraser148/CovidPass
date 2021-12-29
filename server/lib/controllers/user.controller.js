@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const index_1 = __importDefault(require("../models/index"));
 const firebase_1 = require("../firebase");
 const sequelize_1 = require("sequelize");
+const sendgrid_1 = __importDefault(require("../sendgrid"));
 const Employee = index_1.default.employee;
 const Test = index_1.default.test;
 const Company = index_1.default.company;
@@ -127,7 +128,32 @@ const getStats = async (req, res) => {
                 }
             }]
     });
-    res.send({ positive, negative, total, tests });
+    var employees = await Employee.findAll({
+        where: {
+            companyId: user.uid
+        },
+        include: [{
+                model: Test,
+                required: false,
+                where: {
+                    createdAt: {
+                        [sequelize_1.Op.gt]: new Date(new Date().getTime() - 2 * 24 * 60 * 60 * 1000)
+                    }
+                },
+            },
+            {
+                model: Group
+            }],
+        order: [['tests', 'createdAt', 'DESC']]
+    });
+    const tested = employees.filter(employee => employee.tests.length);
+    const untested = employees.filter(employee => !employee.tests.length);
+    const data = [
+        { name: "Untested", value: untested.length },
+        { name: "Tested", value: tested.length }
+    ];
+    const percentage = Math.round(tested.length / (tested.length + untested.length) * 100);
+    res.send({ positive, negative, total, tests, percentage });
 };
 const getEmployees = async (req, res) => {
     const user = validateUser(req);
@@ -220,6 +246,33 @@ const getGroup = async (req, res) => {
     };
     res.send({ employees: { tested, untested }, data, group: group_deets });
 };
+const sendMail = async (req, res) => {
+    const { emails } = req.body;
+    await emails.forEach((email) => {
+        const msg = {
+            to: email.email,
+            from: 'covidpass@sauramedia.com',
+            subject: 'Covid Reminder',
+            templateId: 'd-aaa9941cc1d14314b011fbe9b26e0b9a',
+            substitutionWrappers: ['{{', '}}'],
+            dynamic_template_data: {
+                "name": email.name,
+                "date_test": email.test_date,
+                "company": email.company
+            }
+        };
+        sendgrid_1.default
+            .send(msg);
+    })
+        .then(() => {
+        console.log('Email sent');
+        res.send("Email Sent");
+    })
+        .catch((error) => {
+        console.error(error);
+        res.status(500).send(error);
+    });
+};
 function validateUser(req) {
     const user = req['currentUser'];
     if (!user) {
@@ -234,6 +287,7 @@ exports.default = {
     getStats,
     getEmployees,
     getGroups,
-    getGroup
+    getGroup,
+    sendMail
 };
 //# sourceMappingURL=user.controller.js.map

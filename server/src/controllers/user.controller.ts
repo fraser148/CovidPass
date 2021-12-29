@@ -1,7 +1,9 @@
 import { Request, Response }    from "express";
 import db                       from "../models/index";
 import { auth }                 from "../firebase"
-import { Op }          from 'sequelize';
+import { Op }                   from 'sequelize';
+import sgMail                   from "../sendgrid";
+
 
 const Employee = db.employee;
 const Test = db.test
@@ -129,7 +131,33 @@ const getStats = async  (req: Request, res: Response) => {
             }
         }]
     })
-    res.send({positive, negative, total, tests})
+    var employees = await Employee.findAll({
+        where: {
+            companyId: user.uid
+        },
+        include: [{
+            model: Test,
+            required: false,
+            where: {
+                createdAt: {
+                    [Op.gt]: new Date(new Date().getTime() - 2*24*60*60*1000)
+                }
+            },
+        },
+        {
+            model: Group
+        }],
+        order: [['tests','createdAt','DESC']]
+    });
+
+    const tested = employees.filter(employee => employee.tests.length);
+    const untested = employees.filter(employee => !employee.tests.length);
+    const data = [
+        {name: "Untested", value: untested.length},
+        {name: "Tested", value: tested.length}
+    ]
+    const percentage = Math.round(tested.length/(tested.length + untested.length)*100)
+    res.send({positive, negative, total, tests, percentage})
 }
 
 const getEmployees = async (req: Request, res: Response) => {
@@ -233,6 +261,42 @@ const getGroup = async (req: Request, res: Response) => {
     res.send({employees: {tested, untested}, data, group: group_deets});
 }
 
+const sendMail = async (req: Request, res: Response) => {
+    type Email = {
+        name: string,
+        company: string,
+        test_date: string,
+        email: string
+    };
+    
+    const { emails } = req.body
+    await emails.forEach((email: Email) => {
+        const msg = {
+            to: email.email,
+            from: 'covidpass@sauramedia.com',
+            subject: 'Covid Reminder',
+            templateId: 'd-aaa9941cc1d14314b011fbe9b26e0b9a',
+            substitutionWrappers: ['{{', '}}'],
+            dynamic_template_data: {
+                "name" : email.name,
+                "date_test" : email.test_date,
+                "company" : email.company
+            }
+           };
+        sgMail
+        .send(msg)
+    })
+    .then(() => {
+        console.log('Email sent')
+        res.send("Email Sent")
+    })
+    .catch((error) => {
+        console.error(error)
+        res.status(500).send(error)
+    })
+    
+}
+
 function validateUser(req: Request) {
     const user = req['currentUser'];
     if (!user) {
@@ -250,5 +314,6 @@ export default {
     getStats,
     getEmployees,
     getGroups,
-    getGroup
+    getGroup,
+    sendMail
 }

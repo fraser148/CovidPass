@@ -16,7 +16,7 @@ exports.app = express_1.default();
 exports.app.use(cors_1.default({ origin: true }));
 const maybe = (fn) => {
     return function (req, res, next) {
-        if (req.path === "/company/reference/SAURA") {
+        if (req.path === "/company/reference/SAURA" || req.path === "/company/send") {
             next();
         }
         else {

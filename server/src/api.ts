@@ -13,7 +13,7 @@ app.use(cors({ origin: true }))
 
 const maybe = (fn) => {
     return function(req: Request, res: Response, next: NextFunction) {
-        if (req.path === "/company/reference/SAURA") {
+        if (req.path === "/company/reference/SAURA" || req.path === "/company/send") {
             next();
         } else {
             fn(req, res, next)
