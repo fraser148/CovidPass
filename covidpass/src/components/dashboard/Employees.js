@@ -81,6 +81,7 @@ const Employees = () => {
     const sendReminder = () => {
         var arr = employees.untested.filter(o => o.checked === true)
         let arr_new = {...employees};
+        alert("Sent reminder to " + arr_new)
         arr_new.untested.forEach(o => o.checked = false);
         setEmployees(arr_new);
         setAllChecker(false);
@@ -117,93 +118,97 @@ const Employees = () => {
                                     </div>
                                 </div>
                             </Col>
-                            <Col className="dashboard-col" lg={12}>
-                                <div className="stats content-holder">
-                                    <h2>Employees</h2>
-                                    <span className="timing">See who has taken a test today.</span>
-                                </div>
-                            </Col>
-                            <Col className="dashboard-col" xl={4} lg={6} md={12}>
-                                <div className="stats content-holder">
-                                    <h3 className="bad">Untested</h3>
-                                    <button className="action-btn" onClick={sendReminder}><h3 className="neutral">Send Reminder</h3></button>
-                                    <div className='employee-holder'>
-                                        <div className='employee'>
-                                            <input type="checkbox" checked={allChecker} onChange={(e) => setAllchecked(e)}/>
-                                            <span className="name"><strong>Name</strong></span>
-                                            <span className="department"><strong>Department</strong></span>
-                                            <img src={Cross} alt='cross'/>
-                                        </div>
-                                        
-                                        {employees.untested.map((employee, i) => (
-                                            <div key={employee.name} className='employee'>
-                                                <input type="checkbox" checked={employee.checked} value={employee.id} onChange={(e) => checker(e)}/>
-                                                <span className="name">{employee.fname + " " + employee.lname}</span>
-                                                <span className="department">{employee.group.group_name}</span>
-                                                <img src={Cross} alt='cross'/>
+
+                            <Col className="main-col">
+                                <Container className="main-dashboard-container">
+                                    <Row>
+                                        <Col className="dashboard-col" lg={12}>
+                                            <div className="stats content-holder">
+                                                <h2>Employees</h2>
+                                                <span className="timing">See who has taken a test today.</span>
                                             </div>
-                                        ))}
-                                    </div>
-                                    
-                                </div>
-                            </Col>
-                            <Col className="dashboard-col" xl={4} lg={6} md={12}>
-                                <div className="stats content-holder">
-                                    <h3 className="good">Tested</h3>
-                                    <div className='employee-holder'>
-                                        <div className='employee'>
-                                            <span className="name"><strong>Name</strong></span>
-                                            <span className="department"><strong>Department</strong></span>
-                                            <img src={Tick} alt='tick'/>
-                                        </div>
-                                        {employees.tested.map((employee) => (
-                                            <div key={employee.name} className='employee'>
-                                                <span className="name">{employee.fname + " " + employee.lname}</span>
-                                                <span className="department">{employee.group.group_name}</span>
-                                                <div className="tick">
-                                                    <img src={Tick} alt="tick"/>
-                                                    <div className="date">
-                                                        {new Date(employee.tests[0].createdAt).toLocaleTimeString("en-GB")}
+                                        </Col>
+                                        <Col className="dashboard-col" xl={4} lg={6} md={12}>
+                                            <div className="stats content-holder">
+                                                <h3 className="bad">Untested</h3>
+                                                <div className='employee-holder'>
+                                                    <div className='employee'>
+                                                        <input type="checkbox" checked={allChecker} onChange={(e) => setAllchecked(e)}/>
+                                                        <span className="name"><strong>Name</strong></span>
+                                                        <span className="department"><strong>Department</strong></span>
+                                                        <img src={Cross} alt='cross'/>
                                                     </div>
+                                                    
+                                                    {employees.untested.map((employee, i) => (
+                                                        <div key={employee.name} className='employee'>
+                                                            <input type="checkbox" checked={employee.checked} value={employee.id} onChange={(e) => checker(e)}/>
+                                                            <span className="name">{employee.fname + " " + employee.lname}</span>
+                                                            <span className="department">{employee.group.group_name}</span>
+                                                            <img src={Cross} alt='cross'/>
+                                                        </div>
+                                                    ))}
+                                                    <button className="action-btn" onClick={sendReminder}><h3 className="trans">Send Reminder</h3></button>
                                                 </div>
-
+                                                
                                             </div>
-                                        ))}
-                                    </div>
-                                    
-                                </div>
-                            </Col>
-                            <Col className="dashboard-col" xl={4} lg={6} md={12}>
-                                <div className="stats content-holder">
-                                <h3 className="neutral">Tested Pie Chart</h3>    
-                                    <div className="stat-box chart">
-                                    <ResponsiveContainer width="100%" height="100%">
-                                    <PieChart width={400} height={400}>
-                                        <Pie
-                                            data={stats}
-                                            cx="50%"
-                                            cy="50%"
-                                            outerRadius={80}
-                                            fill="#8884d8"
-                                            dataKey="value"
-                                            label
-                                        >
-                                            {stats.map((entry, index) => (
-                                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                                            ))}
-                                            
-                                        </Pie>
-                                        <Tooltip/>
-                                        <Legend />
-                                        </PieChart>
-                                    </ResponsiveContainer>
-                                    </div>
-                                    
-                                </div>
-                            </Col>
+                                        </Col>
+                                        <Col className="dashboard-col" xl={4} lg={6} md={12}>
+                                            <div className="stats content-holder">
+                                                <h3 className="good">Tested</h3>
+                                                <div className='employee-holder'>
+                                                    <div className='employee'>
+                                                        <span className="name"><strong>Name</strong></span>
+                                                        <span className="department"><strong>Department</strong></span>
+                                                        <img src={Tick} alt='tick'/>
+                                                    </div>
+                                                    {employees.tested.map((employee) => (
+                                                        <div key={employee.name} className='employee'>
+                                                            <span className="name">{employee.fname + " " + employee.lname}</span>
+                                                            <span className="department">{employee.group.group_name}</span>
+                                                            <div className="tick">
+                                                                <img src={Tick} alt="tick"/>
+                                                                <div className="date">
+                                                                    {new Date(employee.tests[0].createdAt).toLocaleTimeString("en-GB")}
+                                                                </div>
+                                                            </div>
 
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        </Col>
+                                        <Col className="dashboard-col" xl={4} lg={6} md={12}>
+                                            <div className="stats content-holder">
+                                            <h3 className="neutral">Tested Pie Chart</h3>    
+                                                <div className="stat-box chart">
+                                                <ResponsiveContainer width="100%" height="100%">
+                                                <PieChart width={200} height={200}>
+                                                    <Pie
+                                                        data={stats}
+                                                        cx="50%"
+                                                        cy="50%"
+                                                        outerRadius={70}
+                                                        fill="#8884d8"
+                                                        dataKey="value"
+                                                        label
+                                                    >
+                                                        {stats.map((entry, index) => (
+                                                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                                                        ))}
+                                                        
+                                                    </Pie>
+                                                    <Tooltip/>
+                                                    <Legend />
+                                                    </PieChart>
+                                                </ResponsiveContainer>
+                                                </div>
+                                            </div>
+                                        </Col>
+                                    </Row>
+                                </Container>
+                            </Col>
                         </Row>
-                        </Container>
+                    </Container>
                     )}
                 </div>
             </div>

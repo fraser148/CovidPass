@@ -113,7 +113,8 @@ export default function Dashboard() {
                     negative: stat.negative,
                     positive: stat.positive,
                     total: stat.total,
-                    tests: stat.tests
+                    tests: stat.tests,
+                    percentage: stat.percentage,
                 });
             }
             getEmployees()
@@ -146,63 +147,91 @@ export default function Dashboard() {
                                 </div>
                             </div>
                         </Col>
-                        <Col className="dashboard-col" lg={6}>
-                            <div className="stats content-holder">
-                                <h2>Dashboard</h2>
-                                <span className="timing">Your last 10 days:</span>
-                                {employees.map((employee) => (
-                                    <div key={employee.name}>
-                                        <p>{employee.name}</p>
+                        <Col className="main-col">
+                            <Container className='main-dashboard-container'>
+                                <Row>
+                                <Col className="dashboard-col" lg={12}>
+                                    <div className="stats content-holder">
+                                        <h2>Dashboard</h2>
+                                        <span className="timing">Your last 10 days:</span>
                                     </div>
-                                ))}
-                                <div className="stats-container">
-                                    <div className="stat-box negative">
-                                        <span className="value">{stats.negative}</span>
-                                        <span className="metric">Negative Tests</span>
-                                    </div>
-                                    <div className="stat-box positive">
-                                        <span className="value">{stats.positive}</span>
-                                        <span className="metric">Positive Tests</span>
-                                    </div>
-                                </div>
-                                {stats.tests && (
-                                    <div className="stat-box chart">
-                                        
-                                        <div className="header-stat">
-                                            <h3>Tests Reported</h3>
-                                            <span className="total">{stats.total}</span>
+                                </Col>
+                                <Col className="dashboard-col" lg={2}>
+                                    <div className="stats content-holder">
+                                        <div className="stats-container">
+                                            <div className="stat-box neutral">
+                                                <span className="value">{stats.percentage}%</span>
+                                                <span className="metric">tested (48 hrs)</span>
+                                            </div>
                                         </div>
-                                        <ResponsiveContainer width="100%" height="100%">
-                                            <LineChart
-                                            width={500}
-                                            height={300}
-                                            data={stats.tests}
-                                            margin={{
-                                                top: 5,
-                                                right: 30,
-                                                left: 20,
-                                                bottom: 5,
-                                            }}
-                                            >
-                                                <CartesianGrid strokeDasharray="3 3" />
-                                                <XAxis dataKey="createdAt"
-                                                domain={["dataMin", "dataMax + 1"]}
-                                                tick={{fontSize: 12}} />
-                                                <YAxis
-                                                    width={6}
-                                                    tick={{fontSize: 12}}
-                                                />
-                                                <Tooltip />
-                                                {/* <Legend /> */}
-                                                <Line type="monotone" dataKey="testCount" stroke="#8884d8" activeDot={{ r: 8 }} />
-                                            </LineChart>
-                                        </ResponsiveContainer>
                                     </div>
-                                )}
-                                
-                                
-                            </div>
+                                </Col>
+                                <Col className="dashboard-col" lg={2}>
+                                    <div className="stats content-holder">
+                                        <div className="stats-container">
+                                            <div className="stat-box negative">
+                                                <span className="value">{stats.negative}</span>
+                                                <span className="metric">Negative Tests</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </Col>
+                                <Col className="dashboard-col" lg={2}>
+                                    <div className="stats content-holder">
+                                        <div className="stats-container">
+                                            <div className="stat-box positive">
+                                                <span className="value">{stats.positive}</span>
+                                                <span className="metric">Positive Tests</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </Col>
+                                <Col className="dashboard-col" lg={2}>
+                                </Col>
+                                <Col className="dashboard-col" lg={6}>
+                                    <div className="stats content-holder">
+                                        {stats.tests && (
+                                            <div className="stat-box chart">
+                                                
+                                                <div className="header-stat">
+                                                    <h3>Tests Reported</h3>
+                                                    <span className="total">{stats.total}</span>
+                                                </div>
+                                                <ResponsiveContainer width="100%" height="100%">
+                                                    <LineChart
+                                                    width={500}
+                                                    height={300}
+                                                    data={stats.tests}
+                                                    margin={{
+                                                        top: 5,
+                                                        right: 30,
+                                                        left: 20,
+                                                        bottom: 5,
+                                                    }}
+                                                    >
+                                                        <CartesianGrid strokeDasharray="3 3" />
+                                                        <XAxis dataKey="createdAt"
+                                                        domain={["dataMin", "dataMax + 1"]}
+                                                        tick={{fontSize: 12}} />
+                                                        <YAxis
+                                                            width={6}
+                                                            tick={{fontSize: 12}}
+                                                        />
+                                                        <Tooltip />
+                                                        {/* <Legend /> */}
+                                                        <Line type="monotone" dataKey="testCount" stroke="#8884d8" activeDot={{ r: 8 }} />
+                                                    </LineChart>
+                                                </ResponsiveContainer>
+                                            </div>
+                                        )}
+                                        
+                                        
+                                    </div>
+                                </Col>
+                                </Row>
+                            </Container>
                         </Col>
+                        
                     </Row>
                 )}
             </div>

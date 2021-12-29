@@ -98,109 +98,58 @@ const Groups = () => {
                     {!user && !userLoading && !userIsPremium && <SignIn />}
                     {user && !userLoading && !loading && userIsPremium && (
                         <Container className="dashboard-container">
-                        <Row className="dashboard-row">
-                            <Col className="dashboard-col header" lg={12}>
-                                <div className="content-holder">
-                                    <input
-                                        className="searchbar"
-                                        type="text"
-                                        placeholder={"Search..."}
-                                    />
-                                    <div className="links">
-                                        <a href="/">Home</a>
-                                        <a href="/">Home</a>
-                                        <a href="/">Home</a>
-                                    </div>
-                                </div>
-                            </Col>
-                            <Col className="dashboard-col" lg={12}>
-                                <div className="stats content-holder">
-                                    <h2>Your Company's Groups</h2>
-                                    <span className="timing">Here are your departments.</span>
-                                </div>
-                            </Col>
-                            <Col className="dashboard-col" xl={8} lg={8} md={12}>
-                                <div className="stats content-holder">
-                                    <h3 className="neutral">Groups</h3>
-                                    {/* <button className="action-btn" onClick={sendReminder}><h3 className="neutral">Send Reminder</h3></button> */}
-                                    <div className='employee-holder'>
-                                        <div className='employee'>
-                                            <input type="checkbox"/>
-                                            <span className="name"><strong>Name</strong></span>
-                                            <span className="department"><strong>Staff</strong></span>
-                                            <span className="department"><strong>Tested (%)</strong></span>
-                                            <img src={Cross} alt='cross'/>
+                            <Row className="dashboard-row">
+                                <Col className="dashboard-col header" lg={12}>
+                                    <div className="content-holder">
+                                        <input
+                                            className="searchbar"
+                                            type="text"
+                                            placeholder={"Search..."}
+                                        />
+                                        <div className="links">
+                                            <a href="/">Home</a>
+                                            <a href="/">Home</a>
+                                            <a href="/">Home</a>
                                         </div>
-                                        
-                                        {groups.map((group, i) => (
-                                            <div key={group.id} className='employee'>
-                                                <input type="checkbox" />
-                                                <span className="name"><Link to={"/dashboard/group/" + group.id}>{group.group_name}</Link></span>
-                                                <span className="department">{group.employees.length}</span>
-                                                <span className="department">{Math.round(group.tested/group.employees.length*100)}%</span>
-                                                <img src={Cross} alt='cross'/>
-                                            </div>
-                                        ))}
                                     </div>
-                                    
-                                </div>
-                            </Col>
-                            {/* <Col className="dashboard-col" xl={4} lg={6} md={12}>
-                                <div className="stats content-holder">
-                                    <h3 className="good">Tested</h3>
-                                    <div className='employee-holder'>
-                                        <div className='employee'>
-                                            <span className="name"><strong>Name</strong></span>
-                                            <span className="department"><strong>Department</strong></span>
-                                            <img src={Tick} alt='tick'/>
-                                        </div>
-                                        {employees.tested.map((employee) => (
-                                            <div key={employee.name} className='employee'>
-                                                <span className="name">{employee.fname + " " + employee.lname}</span>
-                                                <span className="department">{employee.group.group_name}</span>
-                                                <div className="tick">
-                                                    <img src={Tick} alt="tick"/>
-                                                    <div className="date">
-                                                        {new Date(employee.tests[0].createdAt).toLocaleTimeString("en-GB")}
+                                </Col>
+                                <Col className="main-col">
+                                    <Container className='main-dashboard-container'>
+                                        <Row>
+                                            <Col className="dashboard-col" lg={12}>
+                                                <div className="stats content-holder">
+                                                    <h2>Your Company's Groups</h2>
+                                                    <span className="timing">Here are your departments.</span>
+                                                </div>
+                                            </Col>
+                                            <Col className="dashboard-col" xl={8} lg={8} md={12}>
+                                                <div className="stats content-holder">
+                                                    {/* <button className="action-btn" onClick={sendReminder}><h3 className="neutral">Send Reminder</h3></button> */}
+                                                    <div className='employee-holder'>
+                                                        <div className='employee'>
+                                                            <input type="checkbox"/>
+                                                            <span className="name"><strong>Name</strong></span>
+                                                            <span className="department"><strong>Staff</strong></span>
+                                                            <span className="department"><strong>Tested (%)</strong></span>
+                                                            <img src={Cross} alt='cross'/>
+                                                        </div>
+                                                        
+                                                        {groups.map((group, i) => (
+                                                            <div key={group.id} className='employee'>
+                                                                <input type="checkbox" />
+                                                                <span className="name"><Link to={"/dashboard/group/" + group.id}>{group.group_name}</Link></span>
+                                                                <span className="department">{group.employees.length}</span>
+                                                                <span className="department">{Math.round(group.tested/group.employees.length*100)}%</span>
+                                                                <img src={Cross} alt='cross'/>
+                                                            </div>
+                                                        ))}
                                                     </div>
                                                 </div>
-
-                                            </div>
-                                        ))}
-                                    </div>
-                                    
-                                </div>
-                            </Col> */}
-                            {/* <Col className="dashboard-col" xl={4} lg={6} md={12}>
-                                <div className="stats content-holder">
-                                <h3 className="neutral">Tested Pie Chart</h3>    
-                                    <div className="stat-box chart">
-                                    <ResponsiveContainer width="100%" height="100%">
-                                    <PieChart width={400} height={400}>
-                                        <Pie
-                                            data={stats}
-                                            cx="50%"
-                                            cy="50%"
-                                            outerRadius={80}
-                                            fill="#8884d8"
-                                            dataKey="value"
-                                            label
-                                        >
-                                            {stats.map((entry, index) => (
-                                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                                            ))}
-                                            
-                                        </Pie>
-                                        <Tooltip/>
-                                        <Legend />
-                                        </PieChart>
-                                    </ResponsiveContainer>
-                                    </div>
-                                    
-                                </div>
-                            </Col> */}
-
-                        </Row>
+                                            </Col>
+                                        </Row>
+                                    </Container>
+                                </Col>
+                            </Row>
                         </Container>
                     )}
                 </div>

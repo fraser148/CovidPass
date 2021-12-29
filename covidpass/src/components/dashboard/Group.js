@@ -124,6 +124,9 @@ const Group = () => {
                                     </div>
                                 </div>
                             </Col>
+                            <Col className="main-col">
+                            <Container className='main-dashboard-container'>
+                                <Row>
                             <Col className="dashboard-col" lg={12}>
                                 <div className="stats content-holder">
                                     <h2>Group: {group.group_name}</h2>
@@ -133,7 +136,6 @@ const Group = () => {
                             <Col className="dashboard-col" xl={4} lg={6} md={12}>
                                 <div className="stats content-holder">
                                     <h3 className="bad">Untested</h3>
-                                    <button className="action-btn" onClick={sendReminder}><h3 className="neutral">Send Reminder</h3></button>
                                     <div className='employee-holder'>
                                         <div className='employee'>
                                             <input type="checkbox" checked={allChecker} onChange={(e) => setAllchecked(e)}/>
@@ -148,6 +150,7 @@ const Group = () => {
                                                 <img src={Cross} alt='cross'/>
                                             </div>
                                         ))}
+                                        <button className="action-btn" onClick={sendReminder}><h3 className="trans">Send Reminder</h3></button>
                                     </div>
                                     
                                 </div>
@@ -204,6 +207,9 @@ const Group = () => {
                                     
                                 </div>
                             </Col>
+                            </Row>
+                            </Container>
+                        </Col>
 
                         </Row>
                         </Container>

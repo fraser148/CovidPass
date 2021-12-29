@@ -609,6 +609,11 @@ body, #root, .App {
   height:100vh;
   max-width: 100%;
 }
+
+.main-dashboard-container {
+  padding: 8px !important;
+}
+
 .main {
   height: 100%;
   .dashboard {
@@ -762,6 +767,13 @@ body, #root, .App {
         &.neutral {
           background-color: #c3eeff;
         }
+
+        &.trans {
+          background-color: transparent;
+          border: 0.5px solid rgb(52, 139, 238);
+          font-weight: 300;
+          color: rgb(52, 139, 238);
+        }
         
 
       }
@@ -783,8 +795,7 @@ body, #root, .App {
         text-align: center;
         -webkit-appearance: none;
         -moz-appearance: none;
-        position: absolute;
-        right: 0;
+        margin-top: 10px;
       }
 
       &.content-holder {
@@ -802,7 +813,8 @@ body, #root, .App {
         border-radius: 4px;
         box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
         padding: 20px;
-        margin:10px;
+        // margin:10px;
+        width:100%;
 
         .header-stat{
           h3 {
@@ -811,6 +823,8 @@ body, #root, .App {
             margin:0;
           }
 
+          display: flex;
+          flex-direction: column;
           border-bottom: 1px solid $border-box;
           margin-bottom: 20px;
           padding: 5px 10px;
@@ -819,6 +833,7 @@ body, #root, .App {
             font-size: 24px;
             color: $header-grey;
             font-weight: 800;
+            padding: 3px 5px;
           }
         }
 
@@ -828,7 +843,7 @@ body, #root, .App {
           margin:0;
         }
 
-        &.negative, &.positive {
+        &.negative, &.positive, &.neutral {
           background-color: #37C16B;
           color: white;
           border:0;
@@ -840,6 +855,10 @@ body, #root, .App {
 
         &.positive {
           background-color: #DA5D63;
+        }
+
+        &.neutral {
+          background-color: #2196F3;
         }
 
         .value {
@@ -856,7 +875,7 @@ body, #root, .App {
       .employee-holder {
         border: 1px solid $border-box;
         padding: 10px;
-        border-radius: 15px;
+        border-radius: 4px;
         box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
         
         .employee {
